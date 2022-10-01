@@ -3,19 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class Node : MonoBehaviour
 {
     public Transform cameraPosition;
     public List<Node> reachableNodes = new List<Node>();
 
-    [HideInInspector]
-    public Collider col;
+    [FormerlySerializedAs("col")] [HideInInspector]
+    public new Collider collider;
     
-    // Start is called before the first frame update
-    void Start()
+    
+    void Awake()
     {
-        col = GetComponent<Collider>();
+        collider = GetComponent<Collider>();
+        collider.enabled = false;
     }
 
     private void OnMouseDown()
@@ -23,47 +25,47 @@ public class Node : MonoBehaviour
         Arrive();
     }
 
-    public void Arrive()
+    public virtual void Arrive()
     {
         //leave existing currentNode
-        if (GameManager.ins.currentNode != null)
+        if (GameManager.instance.currentNode != null)
         {
-            GameManager.ins.currentNode.Leave();
+            GameManager.instance.currentNode.Leave();
         }
 
         //set currentNode
-        GameManager.ins.currentNode = this;
+        GameManager.instance.currentNode = this;
         
         //move the camera
-        GameManager.ins.cameraRig.AlignTo(cameraPosition);
+        GameManager.instance.cameraRig.AlignTo(cameraPosition);
         
         // Camera.main.transform.position = cameraPosition.position;
         // Camera.main.transform.rotation = cameraPosition.rotation;
         
         //turn off our own collider
-        if (col != null)
+        if (collider != null)
         {
-            col.enabled = false;
+            collider.enabled = false;
         }
         
         //turn on all reachable node colliders
-        foreach (Node node in reachableNodes)
-        {
-            if (node.col != null)
-            {
-                node.col.enabled = true;
-            }
-        }
+        SetReachableNodes(true);
     }
 
-    public void Leave()
+    public virtual void Leave()
     {
         //turn off all reachable node colliders
+        SetReachableNodes(false);
+    }
+
+    public void SetReachableNodes(bool set)
+    {
+        //turn on or off all reachable node colliders
         foreach (Node node in reachableNodes)
         {
-            if (node.col != null)
+            if (node.collider != null)
             {
-                node.col.enabled = false;
+                node.collider.enabled = set;
             }
         }
     }
