@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public Node currentNode;
 
+    public CameraRig cameraRig;
+
     //bad singleton, but the tutorial said to do this for now
     void Awake()
     {

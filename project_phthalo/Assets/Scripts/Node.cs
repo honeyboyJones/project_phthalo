@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Node : MonoBehaviour
 {
@@ -34,8 +35,10 @@ public class Node : MonoBehaviour
         GameManager.ins.currentNode = this;
         
         //move the camera
-        Camera.main.transform.position = cameraPosition.position;
-        Camera.main.transform.rotation = cameraPosition.rotation;
+        GameManager.ins.cameraRig.AlignTo(cameraPosition);
+        
+        // Camera.main.transform.position = cameraPosition.position;
+        // Camera.main.transform.rotation = cameraPosition.rotation;
         
         //turn off our own collider
         if (col != null)
