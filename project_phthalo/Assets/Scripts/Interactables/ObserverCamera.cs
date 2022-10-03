@@ -26,11 +26,7 @@ public class ObserverCamera : MonoBehaviour
             rigRotation = rig.rotation;
             ObjectRotation();
         }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            //close out of object observer
-        }
-        
+
     }
 
     public void ObjectRotation()
@@ -108,5 +104,12 @@ public class ObserverCamera : MonoBehaviour
         q.x = Mathf.Tan (0.5f * Mathf.Deg2Rad * angleX);
 
         return q;
+    }
+
+    public void Close()
+    {
+        Destroy(model.gameObject);
+        rig.rotation = Quaternion.identity;
+        gameObject.SetActive(false);
     }
 }

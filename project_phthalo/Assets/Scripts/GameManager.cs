@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
                 imageviewerCanvas.Close();
                 return;
             }
+            if (observerCamera.gameObject.activeInHierarchy)
+            {
+                observerCamera.Close();
+                return;
+            }
             currentNode.GetComponent<Prop>().location.Arrive();
         }
     }

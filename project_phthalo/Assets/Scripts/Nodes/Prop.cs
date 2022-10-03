@@ -22,9 +22,13 @@ public class Prop : Node
         
         base.Arrive();
         
-        //make this object interactable
+        //make this object interactable, if prerequisite is met
         if (interactable != null)
         {
+            if (GetComponent<Prerequisite>() && !GetComponent<Prerequisite>().Complete)
+            {
+                return;
+            }
             collider.enabled = true;
             interactable.enabled = true;
         }
