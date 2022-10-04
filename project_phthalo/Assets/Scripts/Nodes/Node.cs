@@ -65,7 +65,17 @@ public class Node : MonoBehaviour
         {
             if (node.collider != null)
             {
-                node.collider.enabled = set;
+                if (node.GetComponent<Prerequisite>() && node.GetComponent<Prerequisite>().nodeAccess)
+                {
+                    if (node.GetComponent<Prerequisite>().Complete)
+                    {
+                        node.collider.enabled = set;
+                    }
+                }
+                else
+                {
+                    node.collider.enabled = set;
+                }
             }
         }
     }

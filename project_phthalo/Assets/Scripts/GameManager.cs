@@ -10,10 +10,12 @@ public class GameManager : MonoBehaviour
     
     public ImageViewerCanvas imageviewerCanvas;
     public ObserverCamera observerCamera;
+    public InventoryDisplay inventoryDisplay;
     
     public Node startingNode;
     [HideInInspector]
     public Node currentNode;
+    public Item itemHeld;
 
     public CameraRig cameraRig;
 
